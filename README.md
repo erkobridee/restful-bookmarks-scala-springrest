@@ -30,7 +30,7 @@ Quanto as versões no Servidor:
 
 	Verificar o arquivo pom.xml
 	
-Segue o link do post [How to Create a Webapp with Scala, Spring, Hibernate and Maven in Late 2011](http://grahamhackingscala.blogspot.com.br/2011/08/scala-spring-hibernate-maven-webapp.html) que auxiliou para criar este projeto.
+Segue o link do post [How to Create a Webapp with Scala, Spring, Hibernate and Maven in Late 2011](http://grahamhackingscala.blogspot.com.br/2011/08/scala-spring-hibernate-maven-webapp.html) ([github](https://github.com/GrahamLea/scala-spring-hibernate-maven-webapp)) que auxiliou para criar este projeto.
 
 **Observação:** o conhecimento inicial de como trabalhar com Scala via Maven, foi adquirido através do projeto [maven-scala](https://github.com/erkobridee/maven-scala)
 
