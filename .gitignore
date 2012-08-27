@@ -8,6 +8,8 @@
 **/.Trashes
 
 .cache
+.db
+db/
 
 # use glob syntax.
 syntax: glob
