@@ -15,7 +15,7 @@
 	<context:annotation-config />
 	
 	<context:component-scan base-package="
-		com.erkobridee.restful.bookmarks.scala.springrest.itest,
+		com.erkobridee.restful.bookmarks.scala.springrest.tests.itest,
 		com.erkobridee.restful.bookmarks.scala.springrest.entity
 	" />
 
