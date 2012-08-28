@@ -6,7 +6,7 @@ Exemplo de aplicação para salvar links, onde a interface utiliza AngularJS + T
 Este projeto foi a reescrita do projeto [RESTful Bookmarks Spring REST API](https://github.com/erkobridee/restful-bookmarks-springrest) utilizando a linguagem funcional Scala.
 
 Utilizado neste projeto
------------------------
+------------
 
 * Ambiente de desenvolvimento
 	* [Maven](http://maven.apache.org/) 3
@@ -32,11 +32,15 @@ Quanto as versões no Servidor:
 	
 Segue o link do post [How to Create a Webapp with Scala, Spring, Hibernate and Maven in Late 2011](http://grahamhackingscala.blogspot.com.br/2011/08/scala-spring-hibernate-maven-webapp.html) ([github](https://github.com/GrahamLea/scala-spring-hibernate-maven-webapp)) que auxiliou para criar este projeto.
 
-**Observação:** o conhecimento inicial de como trabalhar com Scala via Maven, foi adquirido através do projeto [maven-scala](https://github.com/erkobridee/maven-scala)
+**Observação:** 
+
+* o conhecimento inicial de como trabalhar com Scala via Maven, foi adquirido através do projeto [maven-scala](https://github.com/erkobridee/maven-scala)
+* Importante observar a classe ***Bookmarks.scala*** a forma de definir que é Serializable (*@scala.serializable*) e nos respectivos atributos são propriedades do genero JavaBean (*@BeanProperty*), necessário para a serialização/deserialização dos objetos JSON/XML <-> Object
 
 
 Montando o ambiente local para uso desse projeto
-------------------------------------------------
+------------
+
 O projeto disponibilizado no github, não possui nenhum arquivo para incluí-lo diretamente no Eclipse. Então após baixar o projeto no seu computador local.
 
 Conforme especificado anteriormente, os itens citados do ambiente de desenvolvimento serão necessários.
@@ -69,7 +73,8 @@ Feito o download/clone do projeto para a sua máquina local, realize o respectiv
 
 
 Quanto ao RESTful do projeto
-----------------------------
+------------
+
 A definição do método a ser executado é definido no cabeçalho da requisição enviada para o servidor.
 
 * **GET** - recupera 1 ou mais bookmarks
@@ -85,7 +90,7 @@ A definição do método a ser executado é definido no cabeçalho da requisiç�
 
 
 Archetype do Maven que gerou a estrutura inicial do projeto
------------------------------------------------------------
+------------
 
 <pre><code>mvn archetype:generate \
   -DarchetypeGroupId=org.scala-tools.archetypes \
