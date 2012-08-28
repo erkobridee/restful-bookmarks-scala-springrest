@@ -74,7 +74,7 @@ class BookmarkDAOTest {
   
   @Test
   def testFindByInvalidId(): Unit = {
-    Assert.assertNull( dao.findById( Long.box(-100) ) )
+    Assert.assertNull( dao.findById( -100 ) )
   }
   
   @Test

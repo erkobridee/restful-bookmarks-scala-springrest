@@ -1,19 +1,24 @@
 package com.erkobridee.restful.bookmarks.scala.springrest.dao.impl
 
 import java.util.List
+import scala.annotation.serializable
 import org.hibernate.SessionFactory
+import org.hibernate.criterion.Restrictions
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import com.erkobridee.restful.bookmarks.scala.springrest.dao.TraitBookmarkDAO
 import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
-import org.hibernate.criterion.Restrictions
-import org.springframework.dao.DataAccessException
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.xml.bind.annotation.XmlRootElement
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport
 
 @Repository("bookmarkDAO")
-class BookmarkDAO extends TraitBookmarkDAO {
+class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
 
   // --------------------------------------------------------------------------
   
@@ -22,15 +27,14 @@ class BookmarkDAO extends TraitBookmarkDAO {
   // --------------------------------------------------------------------------
   
   @Autowired
-  var sessionFactory: SessionFactory = null
+  def init(sessionFactory: SessionFactory): Unit = {
   
-  def setSessionFactory(sessionFactory: SessionFactory): Unit = {
-    this.sessionFactory = sessionFactory
+    log.debug("setSessionFactory")
+    
+    super.setSessionFactory( sessionFactory )
     
     generateInitData
   }
-  
-  def getSession() = this.sessionFactory.getCurrentSession()
   
   // --------------------------------------------------------------------------
   

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod._
 @RequestMapping(value = Array("/bookmarks"))
 class BookmarkController {
 
-  import collection.JavaConversions._
-  
   // --------------------------------------------------------------------------
   
   val log : Logger = LoggerFactory.getLogger(classOf[Bookmark])
