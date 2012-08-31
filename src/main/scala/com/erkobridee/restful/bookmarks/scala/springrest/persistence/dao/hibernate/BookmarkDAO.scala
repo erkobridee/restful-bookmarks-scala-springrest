@@ -1,4 +1,4 @@
-package com.erkobridee.restful.bookmarks.scala.springrest.dao.impl
+package com.erkobridee.restful.bookmarks.scala.springrest.dao.hibernate
 
 import java.util.List
 import scala.annotation.serializable
