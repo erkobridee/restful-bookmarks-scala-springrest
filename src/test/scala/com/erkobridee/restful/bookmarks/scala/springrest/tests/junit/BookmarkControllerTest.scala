@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 import com.erkobridee.restful.bookmarks.scala.springrest.controller.BookmarkController
-import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.{vo_= => vo_=}
 

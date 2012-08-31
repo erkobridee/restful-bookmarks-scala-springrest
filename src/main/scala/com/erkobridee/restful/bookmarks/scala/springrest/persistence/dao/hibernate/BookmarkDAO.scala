@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import com.erkobridee.restful.bookmarks.scala.springrest.dao.TraitBookmarkDAO
-import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao.TraitBookmarkDAO
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.xml.bind.annotation.XmlRootElement
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao.TraitBookmarkDAO
 
 @Repository("bookmarkDAO")
 class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {

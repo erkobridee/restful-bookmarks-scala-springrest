@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.web.client.RestTemplate
-import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo_=
 import junit.framework.Assert

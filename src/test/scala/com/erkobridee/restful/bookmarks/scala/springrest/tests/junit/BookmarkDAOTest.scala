@@ -6,8 +6,8 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import com.erkobridee.restful.bookmarks.scala.springrest.dao.TraitBookmarkDAO
-import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao.TraitBookmarkDAO
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import junit.framework.Assert
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.{vo_= => vo_=}

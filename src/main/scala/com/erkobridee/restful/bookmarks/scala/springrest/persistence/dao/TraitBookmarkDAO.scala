@@ -1,7 +1,7 @@
-package com.erkobridee.restful.bookmarks.scala.springrest.dao
+package com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao
 
 import java.util.List
-import com.erkobridee.restful.bookmarks.scala.springrest.entity.Bookmark
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import javax.transaction.Transaction
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport
 

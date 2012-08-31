@@ -1,4 +1,4 @@
-package com.erkobridee.restful.bookmarks.scala.springrest.entity
+package com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity
 
 import scala.reflect.BeanProperty
 import javax.persistence.Column
