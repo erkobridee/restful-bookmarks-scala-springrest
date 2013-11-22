@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RequestMethod._
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao.TraitBookmarkDAO
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
-import org.springframework.web.bind.annotation.RequestMethod._
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
+
 
 @Controller 
 @RequestMapping(value = Array("/bookmarks"))
@@ -29,9 +31,24 @@ class BookmarkController {
   // --------------------------------------------------------------------------
   @RequestMapping(value = Array("/test"))
   @ResponseBody
-  def test(): String = {
+  def test(): String = {    
     "ok"
   }
+  
+  
+  @RequestMapping(value = Array("/test2"))
+  @ResponseBody
+  def test2(): BookmarkResultData = {
+    log.debug("test 2")
+    
+    var rd : BookmarkResultData = new BookmarkResultData;
+    
+    log.debug(">> " + rd.count)
+    
+    rd    
+  }
+  
+  // --------------------------------------------------------------------------
   
   @RequestMapping(method = Array(GET))
   @ResponseBody
