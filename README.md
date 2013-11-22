@@ -1,6 +1,6 @@
 # Scala - RESTful Bookmarks Spring REST API
 
-Exemplo de aplicação para salvar links, onde a interface utiliza AngularJS + Twitter Bootstrap e o lado do servidor utilizado o Spring RESTful API para disponibilizar um serviço de dados RESTful, que aceita uma comunicação JSON ou XML. 
+Exemplo de aplicação para salvar links, onde a interface utiliza AngularJS + Twitter Bootstrap e o lado do servidor utilizado o Spring RESTful API para disponibilizar um serviço de dados RESTful. A comunicação entre o frontend e o backend é realizada com as informações serializadas em JSON.
 
 Este projeto foi a reescrita do projeto [RESTful Bookmarks Spring REST API](https://github.com/erkobridee/restful-bookmarks-springrest) utilizando a linguagem funcional Scala.
 
