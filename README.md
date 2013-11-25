@@ -110,23 +110,23 @@ A definição do método a ser executado é definido no cabeçalho da requisiç�
 
 * **GET** - recupera 1 ou mais bookmarks
 
-	* [.../api/bookmarks/]() - lista todos os bookmarks
+	* [.../rest/bookmarks/]() - lista todos os bookmarks
 
-	* [.../api/bookmarks/{id}]() - retorna o respectivo bookmark pelo seu ID
+	* [.../rest/bookmarks/{id}]() - retorna o respectivo bookmark pelo seu ID
 
-	* [.../api/bookmarks/search/{name}]() - retorna uma lista dos bookmarks que contém o respectivo nome
+	* [.../rest/bookmarks/search/{name}]() - retorna uma lista dos bookmarks que contém o respectivo nome
 
 * **POST** - insere um novo bookmark
 
-	* [.../api/bookmarks/]() - enviado no corpo da requisição
+	* [.../rest/bookmarks/]() - enviado no corpo da requisição
 
 * **PUT** - atualiza um bookmark existente
 
-	* [.../api/bookmarks/{id}]() - enviado no corpo da requisição
+	* [.../rest/bookmarks/{id}]() - enviado no corpo da requisição
 
 * **DELETE** - remove 1 bookmark pelo ID
 
-	* [.../api/bookmarks/{id}]() 
+	* [.../rest/bookmarks/{id}]() 
 
 
 ## Archetype do Maven que gerou a estrutura inicial do projeto
