@@ -29,9 +29,10 @@ class BookmarkRestTest {
   def getBaseUrl(
     port:String = "8080",
     app:String = "restful-bookmarks-scala-springrest",
+    context:String = "rest",
     model:String = "bookmarks"
   ):String = {
-    "http://localhost:" + port + "/" + app + "/rest/" + model
+    "http://localhost:" + port + "/" + app + "/" + context + "/" + model
   }
   
   // ---------------------------------------------------------------------------
