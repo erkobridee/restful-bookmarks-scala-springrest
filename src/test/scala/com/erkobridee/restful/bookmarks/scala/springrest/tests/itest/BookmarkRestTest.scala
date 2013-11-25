@@ -31,7 +31,7 @@ class BookmarkRestTest {
     app:String = "restful-bookmarks-scala-springrest",
     model:String = "bookmarks"
   ):String = {
-    "http://localhost:" + port + "/" + app + "/api/" + model
+    "http://localhost:" + port + "/" + app + "/rest/" + model
   }
   
   // ---------------------------------------------------------------------------

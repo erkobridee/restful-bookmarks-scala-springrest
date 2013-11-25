@@ -2,8 +2,8 @@ angular.module('BookmarkService', ['ngResource'])
 
   .factory('BookmarkResource', function($resource) {
     
-    var api = $resource(
-      'api/bookmarks/:param1/:param2',
+    var bookmarks = $resource(
+      'rest/bookmarks/:param1/:param2',
       {
         'param1': ''
       , 'param2': ''
@@ -12,7 +12,7 @@ angular.module('BookmarkService', ['ngResource'])
       }
     );
 
-    return api;
+    return bookmarks;
   	  
   });
 
