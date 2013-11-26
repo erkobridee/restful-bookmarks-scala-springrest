@@ -1,19 +1,18 @@
 package com.erkobridee.restful.bookmarks.scala.springrest.tests.junit
 
 import java.util.List
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
 import com.erkobridee.restful.bookmarks.scala.springrest.controller.BookmarkController
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo
 import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.{vo_= => vo_=}
-
 import junit.framework.Assert
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
 @ContextConfiguration(locations = Array("classpath:META-INF/spring/applicationContext.xml"))
@@ -47,8 +46,8 @@ class BookmarkControllerTest {
   // RESTful GET .../search/{name}
   @Test
   def testGetByName(): Unit = {
-    val list: List[Bookmark] = controller.getByName( vo.name )
-    Assert.assertTrue(list.size() > 0)
+    val r: BookmarkResultData = controller.getByName( vo.name )
+    Assert.assertTrue(r.getData.size > 0)
   }
   
   // RESTful PUT .../{id}
@@ -67,8 +66,8 @@ class BookmarkControllerTest {
   // RESTful GET
   @Test
   def testGetAll(): Unit = {
-    val list: List[Bookmark] = controller.getAll
-    Assert.assertTrue(list.size() > 0)
+    val r: BookmarkResultData = controller.getAll
+    Assert.assertTrue(r.getData.size > 0)
   }
   
   // RESTful DELETE

@@ -16,6 +16,8 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
 @ContextConfiguration(locations = Array("classpath:META-INF/spring/applicationContext.xml"))
@@ -42,11 +44,30 @@ class BookmarkDAOTest {
   // ---------------------------------------------------------------------------
 
   @Test
+  def testCount(): Unit = {
+    Assert.assertTrue(dao.count > 0)
+  }
+  
+  @Test
+  def testListOffsetLimit(): Unit = {
+    val r: BookmarkResultData = dao.list( 0, 3 )
+    
+    Assert.assertNotNull( r )
+    
+    Assert.assertNotNull( r.getData )
+    
+    Assert.assertTrue(r.getData.size == 3)
+  }
+  
+  @Test
   def testListAll(): Unit = {
-    val list: List[Bookmark] = dao.listAll
-    Assert.assertNotNull(list);
+    val r: BookmarkResultData = dao.list
+    
+    Assert.assertNotNull( r )
+    
+    Assert.assertNotNull( r.getData )
 
-    val hasObjects: Boolean = list.size() > 0
+    val hasObjects: Boolean = r.getData.size > 0
 
     if (!hasObjects) {
       Assert.assertFalse(hasObjects)
@@ -64,7 +85,9 @@ class BookmarkDAOTest {
     vo.description = "Description Bookmark Test " + time
     vo.url = "http://test.bookmarksdomain.ext/" + time + "/"
     
-    vo = dao.save(vo)
+    vo = dao.save( vo )
+    
+    Assert.assertNotNull( vo.getId )
   }
   
   @Test
@@ -79,14 +102,14 @@ class BookmarkDAOTest {
   
   @Test
   def testFindByValidName(): Unit = {
-    val list: List[Bookmark] = dao.findByName( vo.name )
-    Assert.assertTrue(list.size() > 0)
+    val r: BookmarkResultData = dao.findByName( vo.name )
+    Assert.assertTrue( r.getData.size > 0 )
   }
   
   @Test
   def testFindByInvalidName(): Unit = {
-    val list: List[Bookmark] = dao.findByName("***" + vo.name + "***")
-    Assert.assertFalse(list.size() > 0)
+    val r: BookmarkResultData = dao.findByName("***" + vo.name + "***")
+    Assert.assertFalse( r.getData.size > 0 )
   }
   
   @Test
