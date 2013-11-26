@@ -2,6 +2,8 @@ package com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity
 
 import javax.xml.bind.annotation.XmlRootElement
 import scala.reflect.BeanProperty
+import java.lang.Double
+import scala.math.ceil
 
 /*
 	ref's
@@ -29,9 +31,28 @@ abstract class AbstractResultData[T] {
   var count : Int = 0
   
   @BeanProperty
-  var page : Int = 0 // page index
+  var page : Int = 1 // page index
   
   @BeanProperty
   var pages : Int = 0 // available pages
   
+  //----------------------------------------------------------------------------
+  
+  def updateInfo(
+     count: Int, 
+     page: Int, 
+     size: Int
+  ) : Unit = {
+    this.count = count
+    
+    if(page > 0) {
+      this.page = page
+    } else {
+      this.page = 1
+    }
+    
+    this.pages = ceil( count.toDouble / size ).toInt 
+  }
+  
+  //----------------------------------------------------------------------------
 }
