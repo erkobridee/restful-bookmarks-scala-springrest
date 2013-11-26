@@ -77,9 +77,9 @@ MIT : [erkobridee.mit-license.org](http://erkobridee.mit-license.org)
 
 * Cliente
 
-	* [AngularJS](http://angularjs.org/) 1.0.7
+	* [AngularJS](http://angularjs.org/) 1.2.1
 
-	* [Twitter Bootstrap](http://getbootstrap.com/) 2.3.2
+	* [Twitter Bootstrap](http://getbootstrap.com/) 3.0.2
 
 * Servidor
 
@@ -110,11 +110,11 @@ A definição do método a ser executado é definido no cabeçalho da requisiç�
 
 * **GET** - recupera 1 ou mais bookmarks
 
-	* [.../rest/bookmarks/]() - lista todos os bookmarks
+	* [.../rest/bookmarks/]() - lista todos os bookmarks | suporte para paginação `?page=${num}&size=${length}`
 
 	* [.../rest/bookmarks/{id}]() - retorna o respectivo bookmark pelo seu ID
 
-	* [.../rest/bookmarks/search/{name}]() - retorna uma lista dos bookmarks que contém o respectivo nome
+	* [.../rest/bookmarks/search/{name}]() - retorna uma lista dos bookmarks que contém o respectivo nome | suporte para paginação `?page=${num}&size=${length}`
 
 * **POST** - insere um novo bookmark
 
