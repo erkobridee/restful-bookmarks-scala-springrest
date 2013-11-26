@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod._
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.dao.TraitBookmarkDAO
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Bookmark
 import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
 
 
 @Controller 
-@RequestMapping(value = Array("/bookmarks"))
+@RequestMapping(value = Array("/old/bookmarks"))
 class BookmarkController {
 
   // --------------------------------------------------------------------------
@@ -52,9 +53,9 @@ class BookmarkController {
   
   @RequestMapping(method = Array(GET))
   @ResponseBody
-  def getAll(): List[Bookmark] = {
+  def getAll: BookmarkResultData = {
     log.debug("getAll")
-    dao.listAll
+    dao.list
   }
   
   
@@ -78,7 +79,7 @@ class BookmarkController {
   @ResponseBody
   def getByName(
     @PathVariable name: String
-  ): List[Bookmark] = {
+  ): BookmarkResultData = {
     log.debug("getByName: " + name)
 	dao.findByName(name)
   }
