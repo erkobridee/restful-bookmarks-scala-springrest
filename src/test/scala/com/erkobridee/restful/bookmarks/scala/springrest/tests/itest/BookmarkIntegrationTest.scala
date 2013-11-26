@@ -13,11 +13,12 @@ import com.erkobridee.restful.bookmarks.scala.springrest.tests.Singleton.vo_=
 import junit.framework.Assert
 import java.util.Map
 import java.util.Collections
+import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.BookmarkResultData
 
 
 @RunWith(classOf[SpringJUnit4ClassRunner])
 @ContextConfiguration(locations = Array("classpath:spring/itest-context.xml"))
-class BookmarkRestTest {
+class BookmarkIntegrationTest {
 
   // ---------------------------------------------------------------------------
 
@@ -39,26 +40,37 @@ class BookmarkRestTest {
   
   @Test
   def testInsert(): Unit = {
-    vo = new Bookmark()
+    vo = new Bookmark
     vo.name ="IT RESTFul"
     vo.description = "Insert : Integration Test RESTful"
     vo.url = "http://it.bookmarks.domain/"
 	
-    vo = restTemplate.postForObject(getBaseUrl(), vo, classOf[Bookmark])
+    vo = restTemplate.postForObject( getBaseUrl(), vo, classOf[Bookmark] )
 	
-    Assert.assertNotNull(vo)	
+    Assert.assertNotNull( vo )	
   }
   
   @Test
-  def testListAll(): Unit = {
-    val list: List[Bookmark] = restTemplate.getForObject(getBaseUrl(), classOf[List[Bookmark]])
-    Assert.assertTrue(list.size() > 0)
+  def testList(): Unit = {
+    val r: BookmarkResultData = restTemplate.getForObject( getBaseUrl(), classOf[BookmarkResultData] )
+    
+    Assert.assertTrue( r.getData.size > 0 )
   }
 
   //--- get by id
-  def getById(id: Long): Bookmark = {
-    val vars: Map[String, String] = Collections.singletonMap("id", id + "")
-    restTemplate.getForObject(getBaseUrl()+"/{id}", classOf[Bookmark], vars)    
+  def getById( id: Long ): Bookmark = {
+    var bookmark: Bookmark = null
+    
+    val vars: Map[String, String] = Collections.singletonMap( "id", id + "" )
+    
+    try{
+    	bookmark = restTemplate.getForObject( getBaseUrl()+"/{id}", classOf[Bookmark], vars )
+    } catch {
+      case e: Exception => {}
+    }
+    
+    // return
+    bookmark
   }
   
   @Test
@@ -73,21 +85,21 @@ class BookmarkRestTest {
   }
   
   //--- get by name
-  def getByName(name: String): List[Bookmark] = {
-    val vars: Map[String, String] = Collections.singletonMap("name", name + "")
-    restTemplate.getForObject(getBaseUrl()+"/search/{name}", classOf[List[Bookmark]], vars)
+  def getByName(name: String): BookmarkResultData = {
+    val vars: Map[String, String] = Collections.singletonMap( "name", name + "" )
+    restTemplate.getForObject( getBaseUrl()+"/search/{name}", classOf[BookmarkResultData], vars )
   }
   
   @Test
   def testGetByInvalidName(): Unit = {
-    val list: List[Bookmark] = getByName( "IT RESTFul Invalid Name" )
-    Assert.assertFalse(list.size() > 0)
+    val r: BookmarkResultData = getByName( "IT RESTFul Invalid Name" )
+    Assert.assertFalse( r.getData.size > 0 )
   }
 
   @Test
   def testGetByName(): Unit = {
-    val list: List[Bookmark] = getByName(vo.getName())	
-    Assert.assertTrue(list.size() > 0)
+    val r: BookmarkResultData = getByName( vo.name )	
+    Assert.assertTrue( r.getData.size > 0 )
   }  
   
   //---
@@ -100,22 +112,22 @@ class BookmarkRestTest {
     vo.description = vo.description + " ... updated"
     vo.url = vo.url + "/updated"
 
-    val vars: Map[String, String] = Collections.singletonMap("id", vo.id + "")
-    restTemplate.put(getBaseUrl() + "/{id}", vo, vars)
+    val vars: Map[String, String] = Collections.singletonMap( "id", vo.id + "" )
+    restTemplate.put( getBaseUrl() + "/{id}", vo, vars )
 	
-    vo = getById(vo.id)
+    vo = getById( vo.id )
 	
-    Assert.assertEquals(nameUpdated, vo.name)
+    Assert.assertEquals( nameUpdated, vo.name )
   }  
   
   @Test
   def testDelete(): Unit = {
-    val vars: Map[String, String] = Collections.singletonMap("id", vo.id + "");
-    restTemplate.delete(getBaseUrl() + "/{id}", vars)
+    val vars: Map[String, String] = Collections.singletonMap( "id", vo.id + "" );
+    restTemplate.delete( getBaseUrl() + "/{id}", vars )
 	
-    vo = getById(vo.id)
+    vo = getById( vo.id )
 	
-    Assert.assertNull(vo)
+    Assert.assertNull( vo )
   }  
   
 }
