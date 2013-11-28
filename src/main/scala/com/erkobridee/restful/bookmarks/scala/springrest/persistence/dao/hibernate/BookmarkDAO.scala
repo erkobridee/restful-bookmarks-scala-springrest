@@ -29,28 +29,30 @@ import org.hibernate.criterion.Projections
 @Repository("bookmarkDAO")
 class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
 
-  // --------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   
-  val log : Logger = LoggerFactory.getLogger(classOf[BookmarkDAO])
+  val log : Logger = LoggerFactory.getLogger( classOf[BookmarkDAO] )
   
-  // --------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   
   @Autowired
-  def init(sessionFactory: SessionFactory): Unit = {
+  def init( sessionFactory: SessionFactory ): Unit = {
   
-    log.debug("setSessionFactory")
+    log.debug( "setSessionFactory" )
     
     super.setSessionFactory( sessionFactory )
     
     generateInitData
   }
   
-  // --------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   
   def generateInitData(): Unit = {
+    
     val bookmarksCount: Int = this.count
     
-    if(bookmarksCount == 0) {
+    if( bookmarksCount == 0 ) {
+      
       log.debug("generateInitData")
       
       var vo: Bookmark = null
@@ -59,25 +61,25 @@ class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
       vo.name = "twitter"
       vo.description = "@ErkoBridee"
       vo.url = "https://twitter.com/ErkoBridee"
-      save(vo)
+      save( vo )
       
       vo = new Bookmark
       vo.name = "github"
       vo.description = "github/erkobridee"
       vo.url = "https://github.com/erkobridee"
-      save(vo)
+      save( vo )
       
       vo = new Bookmark
       vo.name = "Site"
       vo.description = "Site Erko Bridee"
       vo.url = "http://about.erkobridee.com/"
-      save(vo)
+      save( vo )
 
       vo = new Bookmark
       vo.name = "delicious"
       vo.description = "delicious/erko.bridee"
       vo.url = "http://www.delicious.com/erko.bridee"
-      save(vo)
+      save( vo )
       
     }
       
@@ -86,20 +88,25 @@ class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
   //----------------------------------------------------------------------------
   
   def count(): Int = {
+    
     this.count(null)
+    
   }
   
-  def count(criterion: Criterion): Int = {
+  def count( criterion: Criterion ): Int = {
 	
     var c: Criteria = getSession.createCriteria( classOf[Bookmark] )
 	
     c.setProjection( Projections.rowCount )
 	
-	if(criterion != null) {
-		c.add(criterion)
+	if( criterion != null ) {
+		
+	  c.add(criterion)
+	  
 	}
 	
-	c.list.get(0).asInstanceOf[Int]	
+	c.list.get( 0 ).asInstanceOf[Int]
+	
   }
     
     
@@ -111,21 +118,30 @@ class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
 
   	
   @Transactional(readOnly = true)
-  def list(page: Int, size: Int = 0): BookmarkResultData = {
-    log.debug("list [ page: " + page + " | size: " + size + " ]")
+  def list( page: Int, size: Int = 0 ): BookmarkResultData = {
     
-    var c: Criteria = getSession.createCriteria(classOf[Bookmark])
+    log.debug( "list [ page: " + page + " | size: " + size + " ]" )
     
-    if(size == 0) {
-    	c.setMaxResults( 10 )
+    var c: Criteria = getSession.createCriteria( classOf[Bookmark] )
+    
+    if( size == 0 ) {
+      
+      c.setMaxResults( 10 )
+    	
 	} else {
-		c.setMaxResults( size )
+	  
+	  c.setMaxResults( size )
+		
 	}
     
-    if(page > 1) {
-		c.setFirstResult((page-1) * size)
+    if( page > 1 ) {
+    
+      c.setFirstResult( ( page-1 ) * size )
+      
 	} else {
-		c.setFirstResult(0)
+	  
+	  c.setFirstResult( 0 )
+	  
 	}
     
     new BookmarkResultData(
@@ -138,46 +154,56 @@ class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
   //----------------------------------------------------------------------------
   
   @Transactional(readOnly = true)
-  def findById(id: Long): Bookmark = { 
-	log.debug("findById: " + id)
+  def findById( id: Long ): Bookmark = {
+    
+	log.debug( "findById: " + id )
     
 	getSession
-      .get(classOf[Bookmark], Long.box(id))
+      .get(classOf[Bookmark], Long.box( id ) )
       .asInstanceOf[Bookmark]
   }
   
   //----------------------------------------------------------------------------
   
   @Transactional(readOnly = true)
-  def findByName(name: String): BookmarkResultData = 
-    this.findByName(name, 0, 0)
+  def findByName( name: String ): BookmarkResultData = 
+    this.findByName( name, 0, 0 )
 
     
   @Transactional(readOnly = true)
-  def findByName(name : String, page: Int, size: Int): BookmarkResultData = {
-    log.debug("findByName: " + name + "[ page: " + page + " | size: " + size + " ]")
+  def findByName( name : String, page: Int, size: Int ): BookmarkResultData = {
     
-    val criterion: Criterion = Restrictions.like("name", "%"+ name + "%" )
+    log.debug( "findByName: " + name + " [ page: " + page + " | size: " + size + " ]" )
     
-    var c: Criteria = getSession.createCriteria(classOf[Bookmark])
+    val criterion: Criterion = Restrictions.like( "name", "%"+ name + "%" )
     
-    c.add(criterion)
+    var c: Criteria = getSession.createCriteria( classOf[Bookmark] )
     
-    if(size == 0) {
-    	c.setMaxResults( 10 )
+    c.add( criterion )
+    
+    if( size == 0 ) {
+    
+      c.setMaxResults( 10 )
+      
 	} else {
-		c.setMaxResults( size )
+	  
+	  c.setMaxResults( size )
+	  
 	}
     
-    if(page > 1) {
-		c.setFirstResult((page-1) * size)
+    if( page > 1 ) {
+      
+      c.setFirstResult( ( page-1 ) * size )
+      
 	} else {
-		c.setFirstResult(0)
+	  
+	  c.setFirstResult( 0 )
+	  
 	}
     
     new BookmarkResultData(
         c.list.asInstanceOf[List[Bookmark]],
-        this.count(criterion),
+        this.count( criterion ),
         page, size
     )
   }
@@ -185,26 +211,37 @@ class BookmarkDAO extends HibernateDaoSupport with TraitBookmarkDAO {
   //----------------------------------------------------------------------------
   
   @Transactional
-  def save(value: Bookmark): Bookmark = {
-    log.debug("save")
+  def save( value: Bookmark ): Bookmark = {
+    
+    log.debug( "save" )
     
     getSession
-      .merge(value)
+      .merge( value )
       .asInstanceOf[Bookmark]
   }
 
   @Transactional
-  def remove(id: Long): Boolean = {
-    log.debug("remove: " + id)
+  def remove( id: Long ): Boolean = {
     
-    var flag : Boolean = true
-    try {
-      getSession.delete(findById(id))
-    } catch {
-      case e : DataAccessException => {
-        flag = false
-        log.error("DataAccessException", e)       
-      }
+    log.debug( "remove: " + id )
+    
+    var flag: Boolean = false
+    
+    var bookmark: Bookmark = findById( id ) 
+    
+    if( bookmark != null ) {
+    
+	    try {
+	      
+	      getSession.delete( bookmark )
+	      flag = true
+	      
+	    } catch {
+	      case e : DataAccessException => {
+	        log.error( "DataAccessException", e )       
+	      }
+	    }
+	    
     }
      
     flag

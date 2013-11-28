@@ -20,12 +20,12 @@ import com.erkobridee.restful.bookmarks.scala.springrest.persistence.entity.Book
 @ContextConfiguration(locations = Array("classpath:spring/itest-context.xml"))
 class BookmarkIntegrationTest {
 
-  // ---------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
 
   @Autowired
   val restTemplate: RestTemplate = null
   
-  // ---------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   
   def getBaseUrl(
     port:String = "8080",
@@ -36,10 +36,11 @@ class BookmarkIntegrationTest {
     "http://localhost:" + port + "/" + app + "/" + context + "/" + model
   }
   
-  // ---------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
+  // RESTful POST
   
   @Test
-  def testInsert(): Unit = {
+  def test_01_Post(): Unit = {
     vo = new Bookmark
     vo.name ="IT RESTFul"
     vo.description = "Insert : Integration Test RESTful"
@@ -50,14 +51,19 @@ class BookmarkIntegrationTest {
     Assert.assertNotNull( vo )	
   }
   
+  //----------------------------------------------------------------------------
+  // RESTful GET
+  
   @Test
-  def testList(): Unit = {
+  def test_02_Get(): Unit = {
     val r: BookmarkResultData = restTemplate.getForObject( getBaseUrl(), classOf[BookmarkResultData] )
     
     Assert.assertTrue( r.getData.size > 0 )
   }
 
-  //--- get by id
+  //----------------------------------------------------------------------------
+  // RESTful GET .../{id}
+  
   def getById( id: Long ): Bookmark = {
     var bookmark: Bookmark = null
     
@@ -74,38 +80,44 @@ class BookmarkIntegrationTest {
   }
   
   @Test
-  def testGetByInvalidId(): Unit = {
+  def test_03_GetByInvalidId(): Unit = {
     Assert.assertNull( getById( -1 ) ) 
   }
 
   @Test
-  def testGetById(): Unit = {
-    vo = getById(vo.id)
-    Assert.assertNotNull(vo)
+  def test_03_GetById(): Unit = {
+    vo = getById( vo.id )
+    Assert.assertNotNull( vo )
   }
   
-  //--- get by name
-  def getByName(name: String): BookmarkResultData = {
+  //----------------------------------------------------------------------------
+  // RESTful GET .../search/{name}
+  
+  def getByName( name: String ): BookmarkResultData = {
     val vars: Map[String, String] = Collections.singletonMap( "name", name + "" )
+    
     restTemplate.getForObject( getBaseUrl()+"/search/{name}", classOf[BookmarkResultData], vars )
   }
   
   @Test
-  def testGetByInvalidName(): Unit = {
+  def test_04_GetByInvalidName(): Unit = {
     val r: BookmarkResultData = getByName( "IT RESTFul Invalid Name" )
+    
     Assert.assertFalse( r.getData.size > 0 )
   }
 
   @Test
-  def testGetByName(): Unit = {
-    val r: BookmarkResultData = getByName( vo.name )	
+  def test_04_GetByName(): Unit = {
+    val r: BookmarkResultData = getByName( vo.getName() )
+    
     Assert.assertTrue( r.getData.size > 0 )
   }  
   
-  //---
+  //----------------------------------------------------------------------------
+  // RESTful PUT .../{id}
   
   @Test
-  def testUpdate(): Unit = {
+  def test_05_Update(): Unit = {
     val nameUpdated: String = vo.name + " ... updated"
 
     vo.name =  nameUpdated
@@ -118,16 +130,21 @@ class BookmarkIntegrationTest {
     vo = getById( vo.id )
 	
     Assert.assertEquals( nameUpdated, vo.name )
-  }  
+  }
+  
+  //----------------------------------------------------------------------------
+  // RESTful DELETE .../{id}
   
   @Test
   def testDelete(): Unit = {
-    val vars: Map[String, String] = Collections.singletonMap( "id", vo.id + "" );
+    val vars: Map[String, String] = Collections.singletonMap( "id", vo.id + "" )
     restTemplate.delete( getBaseUrl() + "/{id}", vars )
 	
     vo = getById( vo.id )
 	
     Assert.assertNull( vo )
-  }  
+  }
+  
+  //----------------------------------------------------------------------------
   
 }

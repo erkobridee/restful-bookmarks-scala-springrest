@@ -26,33 +26,46 @@ class BookmarkRestTest {
   val rest: BookmarkRESTController = null
   
   //----------------------------------------------------------------------------
-  
   // RESTful POST
+  
   @Test
-  def testInsert(): Unit = {
+  def test_01_Create(): Unit = {
     vo = new Bookmark    
     vo.name = "BookmarkServiceTest Name"
     vo.description = "BookmarkServiceTest Description"
     vo.url = "http://service.bookmarkdomain.test/" + System.currentTimeMillis + "/"
+    
     vo = rest.create( vo ).getBody
 
     Assert.assertNotNull( vo.id ) 
   }
   
+  //----------------------------------------------------------------------------
+  // RESTful GET
+  
+  @Test
+  def test_02_List(): Unit = {
+    val r: BookmarkResultData = rest.list( 1, 10 ).getBody
+    
+    Assert.assertTrue( r.getData.size > 0 )
+  }
+  
+  //---------------------------------------------------------------------------- 
   // RESTful GET .../{id}
+  
   def getById( id: Long ): ResponseEntity[_] =
     rest.get( id )
   
   
   @Test
-  def testGetById(): Unit = {
+  def test_03_GetById(): Unit = {
     val response: ResponseEntity[_] = this.getById( vo.getId )
     
     Assert.assertTrue( response.getBody.isInstanceOf[Bookmark] )
   }
   
   @Test
-  def testGetByInvalidId(): Unit = {
+  def test_03_GetByInvalidId(): Unit = {
     val response: ResponseEntity[_] = this.getById( -1 )
     
     Assert.assertTrue( response.getBody.isInstanceOf[ResultMessage] )
@@ -62,29 +75,31 @@ class BookmarkRestTest {
     Assert.assertEquals( 404, resultMessage.code )
   }
   
-  
+  //----------------------------------------------------------------------------
   // RESTful GET .../search/{name}
+  
   def getByName( name: String ): BookmarkResultData =
     rest.search( name, 1, 10 ).getBody
   
   @Test
-  def testGetByName(): Unit = {
+  def test_04_GetByName(): Unit = {
     val r: BookmarkResultData = this.getByName( vo.getName )
     
     Assert.assertTrue( r.getData.size > 0 )
   }
   
   @Test
-  def getByInvalidName(): Unit = {
+  def get_04_ByInvalidName(): Unit = {
     val r: BookmarkResultData = getByName( "IT RESTFul Invalid Name" )
     
     Assert.assertFalse( r.getData.size > 0 )
   } 
   
-  
+  //----------------------------------------------------------------------------
   // RESTful PUT .../{id}
+  
   @Test
-  def testUpdate(): Unit = {
+  def test_05_Update(): Unit = {
     val nameUpdated: String = vo.name + "++"
     
     vo.name = nameUpdated
@@ -96,30 +111,26 @@ class BookmarkRestTest {
     Assert.assertEquals( nameUpdated, vo.name )
   }
   
-  // RESTful GET
+  //----------------------------------------------------------------------------
+  // RESTful DELETE
+  
+  def deleteById( id: Long ): ResultMessage =
+    rest.remove( id ).getBody
+  
   @Test
-  def getList(): Unit = {
-    val r: BookmarkResultData = rest.getList( 1, 10 ).getBody
-    
-    Assert.assertTrue( r.getData.size > 0 )
+  def test_06_DeleteByInvalidId(): Unit = {
+    val message: ResultMessage = this.deleteById( -1 )
+		
+	Assert.assertEquals( 404, message.code )
   }
   
-  // RESTful DELETE
   @Test
-  def testDelete(): Unit = {
-    val id: Long = vo.id
-    
-    var message: ResultMessage = rest.remove( id ).getBody
-
-    Assert.assertEquals( 202, message.code )
-    
-    val response: ResponseEntity[_] = rest.get( id )
-    
-    Assert.assertTrue( response.getBody.isInstanceOf[ResultMessage] )
-    
-    message = response.getBody.asInstanceOf[ResultMessage]
-    
-    Assert.assertEquals( 404, message.code )    
+  def test_06_DeleteById(): Unit = {
+    val message: ResultMessage = this.deleteById( vo.id )
+		
+	Assert.assertEquals( 202, message.code )
   }
+  
+  //----------------------------------------------------------------------------
   
 }

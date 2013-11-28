@@ -78,9 +78,10 @@ class BookmarkRESTController {
 	  @RequestParam(value="size", required=false, defaultValue="10") size: Int
     
   ): ResponseEntity[BookmarkResultData] = {
-    log.debug( "search: " + find )
     
-    val r: BookmarkResultData = dao.findByName(find, page, size)
+    log.debug( "search: " + find + " [ page: " + page + " | size: " + size + " ]" )
+    
+    val r: BookmarkResultData = dao.findByName( find, page, size )
     
     var responseHeader: HttpHeaders = new HttpHeaders
 		
@@ -98,13 +99,14 @@ class BookmarkRESTController {
   
   @RequestMapping(method = Array(GET))
   @ResponseBody
-  def getList(
+  def list(
     
 	  @RequestParam(value="page", required=false, defaultValue="1") page: Int,
 	  @RequestParam(value="size", required=false, defaultValue="10") size: Int
       
   ): ResponseEntity[BookmarkResultData] = {
-    log.debug( "getList" )
+    
+    log.debug( "list [ page: " + page + " | size: " + size + " ]" )
     
     val r: BookmarkResultData = dao.list( page, size )
     
@@ -132,7 +134,8 @@ class BookmarkRESTController {
       @PathVariable id: Long
       
   ): ResponseEntity[_] = {
-    log.debug("get: " + id)
+    
+    log.debug( "get: " + id )
     
     var bookmark: Bookmark = dao.findById( id )
     
@@ -152,12 +155,14 @@ class BookmarkRESTController {
 		new ResponseEntity[Bookmark]( bookmark, responseHeader, HttpStatus.OK )  
       
     } else {
+      
     	val resultMessage: ResultMessage = new ResultMessage( 404, "id: " + id + " not found." )
     	
     	// return
 		new ResponseEntity[ResultMessage](
 		    resultMessage, HttpStatus.NOT_FOUND		    
 		)
+		
     }
   }
   
@@ -169,6 +174,7 @@ class BookmarkRESTController {
       @RequestBody value: Bookmark
       
   ): ResponseEntity[Bookmark] = {
+    
     log.debug( "create" )
     
     val bookmark: Bookmark = dao.save( value )
@@ -199,6 +205,7 @@ class BookmarkRESTController {
       @RequestBody value: Bookmark
       
   ): ResponseEntity[Bookmark] = {
+    
     log.debug( "update" )
     
     val bookmark: Bookmark = dao.save( value )
@@ -231,17 +238,22 @@ class BookmarkRESTController {
   ):ResponseEntity[ResultMessage] = {
     
     val flag = dao.remove( id )
+    
     log.debug( "remove: " + id + " | status: " + flag )
     
     var message: ResultMessage = null
     var response: ResponseEntity[ResultMessage] = null
     
-	if(flag) {
+	if( flag ) {
+	  
 		message = new ResultMessage( 202, "id: " + id + " removed." )
 		response = new ResponseEntity[ResultMessage]( message, HttpStatus.ACCEPTED )
+		
 	} else {
+	  
 		message = new ResultMessage(404, "id: " + id + " not found.");
 		response = new ResponseEntity[ResultMessage]( message, HttpStatus.NOT_FOUND )
+		
 	}    
     
     // return
