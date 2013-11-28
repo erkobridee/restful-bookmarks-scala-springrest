@@ -89,7 +89,7 @@ class BookmarkRestTest {
   }
   
   @Test
-  def get_04_ByInvalidName(): Unit = {
+  def test_04_GetByInvalidName(): Unit = {
     val r: BookmarkResultData = getByName( "IT RESTFul Invalid Name" )
     
     Assert.assertFalse( r.getData.size > 0 )
